@@ -1,0 +1,22 @@
+---
+- name: "Ensure {{ venv_build_location }} exists"
+  file:
+    dest: "{{ venv_build_location }}"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    state: directory
+
+- name: "Ensure {{ venv_build_location }} is a virtualenv"
+  shell: "virtualenv ."
+  args:
+    chdir: "{{ venv_build_location }}"
+    creates: "{{ venv_build_location }}/bin/activate"
+
+- import_tasks: build_libgit2.yml
+
+- name: "Install pygit2 to {{ venv_build_location }}"
+  environment:
+    LIBGIT2: "{{ venv_build_location }}"
+    LDFLAGS: "-WL,-rpath='$LIBGIT2/lib',--enable-new-dtags $LDFLAGS"
+  shell: ". {{ venv_build_location }}/bin/activate && {{ venv_build_location }}/bin/pip install pygit2"
+  notify: "Test pygit2"

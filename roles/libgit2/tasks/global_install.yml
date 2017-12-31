@@ -1,0 +1,13 @@
+---
+- import_tasks: build_libgit2.yml
+  become: yes
+
+- name: "Install pygit2"
+  pip:
+    name: pygit2
+    state: latest
+  notify: "Test pygit2"
+
+- name: "Configure the dynamic linker"
+  shell: "ldconfig"
+  become: yes

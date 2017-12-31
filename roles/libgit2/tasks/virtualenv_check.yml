@@ -1,0 +1,11 @@
+---
+- name: "Set the reused variables"
+  set_fact:
+    python_binary: "{{ venv_build_location }}/bin/python"
+    build_location: "{{ venv_build_location }}"
+    is_global_install: no
+
+- import_tasks: check_existing_libgit2.yml
+
+- include_tasks: virtualenv_install.yml
+  when: force_rebuild or has_libgit2 | changed

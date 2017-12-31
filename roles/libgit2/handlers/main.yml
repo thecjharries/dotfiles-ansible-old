@@ -1,0 +1,8 @@
+---
+- name: Clean tmpdir
+  file:
+    path: "{{ tmpdir.path }}"
+    state: "{{ 'absent' if always_clean_temp else omit }}"
+    force: "{{ 'yes' if always_clean_temp else omit }}"
+- name: Test pygit2
+  command: "{{ python_binary }} -c 'import pygit2'"

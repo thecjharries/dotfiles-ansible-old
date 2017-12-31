@@ -1,0 +1,14 @@
+---
+
+- name: "Attempt to update generics"
+  win_chocolatey:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items: possible_generics
+
+- name: "Attempt to update Windows only items"
+  win_chocolatey:
+    name: "{{ item }}"
+    state: latest
+  become: yes

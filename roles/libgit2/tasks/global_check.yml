@@ -1,0 +1,11 @@
+---
+- name: "Set the reused variables"
+  set_fact:
+    python_binary: python
+    build_location: "{{ global_build_location }}"
+    is_global_install: yes
+
+- import_tasks: check_existing_libgit2.yml
+
+- include_tasks: global_install.yml
+  when: force_rebuild or has_libgit2 | changed

@@ -1,0 +1,35 @@
+---
+
+- name: "Install dev prereqs"
+  package:
+    name: "{{ item }}"
+    state: latest
+    become: yes
+  with_items:
+    - gcc-c++
+    - make
+
+- name: "Refresh the Yarn repo"
+  get_url:
+    url: https://dl.yarnpkg.com/rpm/yarn.repo
+    dest: /etc/yum.repos.d/yarn.repo
+  become: yes
+
+- name: "Get latest Node installer"
+  get_url:
+    url: https://rpm.nodesource.com/setup_9.x
+    tmp_dest: /tmp/nodesource
+
+- name: "Run latest NodeSource installer"
+  command: "bash /tmp/nodesource"
+  become: yes
+
+- name: Update main binaries
+  package:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - nodejs
+    - yarn
+

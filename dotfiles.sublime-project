@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+    "build_systems": [
+        {
+            "name": "10: scratch playbook",
+            "working_dir": "${project_path}",
+            // "shell_cmd": "ansible-playbook -vvvv scratch.yml --connection=local",
+            "windows": {
+                "shell_cmd": "env bash -c 'ansible-playbook scratch.yml --connection=local'"
+            },
+            "target": "ansi_color_build",
+            "syntax": "Packages/ANSIescape/ANSI.tmLanguage"
+        }
+    ]
+}
