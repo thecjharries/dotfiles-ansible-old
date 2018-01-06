@@ -5,3 +5,7 @@ root_dir: "/home/{{ ansible_user }}"
 config_dir: "{{ root_dir }}/.config"
 
 powerline_font_src_path: /opt/powerline-fonts
+
+local_font_cache: "{{ root_dir }}/.local/share/fonts"
+
+local_fontconfig: "{{ config_dir }}/fontconfig/conf.d"
