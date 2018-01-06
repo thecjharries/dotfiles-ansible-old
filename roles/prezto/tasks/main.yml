@@ -25,6 +25,7 @@
     dest: "{{ prezto_src_path }}"
     clone: yes
     update: yes
+    recursive: yes
   register: prezto_clone
   become: yes
   tags:
@@ -33,7 +34,7 @@
 - name: "Ensure prezto src is linked"
   file:
     path: "{{ config_dir }}/prezto"
-    src: " {{ prezto_src_path }}"
+    src: "{{ prezto_src_path }}"
     state: link
     owner: "{{ owning_user }}"
     group: "{{ owning_group }}"
@@ -53,3 +54,10 @@
   tags:
     - config
     - template
+
+- name: "Ensure zsh is the default shell"
+  user:
+    name: "{{ owning_user }}"
+    shell: /bin/zsh
+  tags:
+    - config
