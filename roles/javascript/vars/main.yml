@@ -1,0 +1,4 @@
+---
+dependencies:
+  - make
+  - gcc-c++
