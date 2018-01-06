@@ -1,46 +1,57 @@
 ---
-- name: "Install dev prereqs"
+- name: "Install prereq dependencies"
   package:
     name: "{{ item }}"
     state: latest
+  with_items: "{{ dependencies }}"
   become: yes
-  with_items:
-    - "gcc-c++"
-    - "make"
+  tags:
+    - dependency
+    - install
 
-- name: "Refresh the Yarn repo"
-  get_url:
-    url: https://dl.yarnpkg.com/rpm/yarn.repo
-    dest: /etc/yum.repos.d/yarn.repo
-  become: yes
+# ---
+# - name: "Install dev prereqs"
+#   package:
+#     name: "{{ item }}"
+#     state: latest
+#   become: yes
+#   with_items:
+#     - "gcc-c++"
+#     - "make"
 
-- name: "Ensure installers directory is present"
-  file:
-    path: "{{ root_dir }}/.config/installers"
-    state: directory
-    owner: "{{ owning_user }}"
-    group: "{{ owning_group }}"
+# - name: "Refresh the Yarn repo"
+#   get_url:
+#     url: https://dl.yarnpkg.com/rpm/yarn.repo
+#     dest: /etc/yum.repos.d/yarn.repo
+#   become: yes
 
-- name: "Get latest Node installer"
-  get_url:
-    url: https://rpm.nodesource.com/setup_9.x
-    dest: "{{ root_dir }}/.config/installers/nodesource"
-    mode: "u=rwx,go="
-    owner: "{{ owning_user }}"
-    group: "{{ owning_group }}"
-  register: nodesource_installer
+# - name: "Ensure installers directory is present"
+#   file:
+#     path: "{{ root_dir }}/.config/installers"
+#     state: directory
+#     owner: "{{ owning_user }}"
+#     group: "{{ owning_group }}"
 
-- name: "Run latest NodeSource installer"
-  command: "bash {{ root_dir }}/.config/installers/nodesource"
-  become: yes
-  when: nodesource_installer|changed
+# - name: "Get latest Node installer"
+#   get_url:
+#     url: https://rpm.nodesource.com/setup_9.x
+#     dest: "{{ root_dir }}/.config/installers/nodesource"
+#     mode: "u=rwx,go="
+#     owner: "{{ owning_user }}"
+#     group: "{{ owning_group }}"
+#   register: nodesource_installer
 
-- name: Update main binaries
-  package:
-    name: "{{ item }}"
-    state: latest
-  become: yes
-  with_items:
-    - nodejs
-    - yarn
+# - name: "Run latest NodeSource installer"
+#   command: "bash {{ root_dir }}/.config/installers/nodesource"
+#   become: yes
+#   when: nodesource_installer|changed
+
+# - name: Update main binaries
+#   package:
+#     name: "{{ item }}"
+#     state: latest
+#   become: yes
+#   with_items:
+#     - nodejs
+#     - yarn
 
