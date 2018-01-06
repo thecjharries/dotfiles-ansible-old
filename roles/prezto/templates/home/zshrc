@@ -14,7 +14,7 @@ fi
 
 unsetopt auto_name_dirs
 
-source .zalias
+source ~/.zalias
 
 if which keepass >/dev/null; then
   export SSH_AUTH_SOCK=/tmp/$USER/ssh-keeagent.sock
