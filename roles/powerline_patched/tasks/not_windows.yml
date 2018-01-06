@@ -60,9 +60,9 @@
     - symlink
     - install
 
-# - name: "Refresh font cache"
-#   command: "fc-cache -vf {{ local_font_cache }}"
-#   when: powerline_fonts | changed
-#   tags:
-#     - command
-#     - refresh
+- name: "Refresh font cache"
+  command: "fc-cache -vf {{ local_font_cache }}"
+  when: powerline_fonts | changed
+  tags:
+    - command
+    - refresh
