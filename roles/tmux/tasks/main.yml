@@ -63,18 +63,13 @@
   tags:
     - repo
 
-
-# - name: "Update local code"
-#   git:
-#     repo: https://github.com/tmux-plugins/tpm
-#     dest: "{{ root_dir }}/.tmux/plugins/tpm"
-#     clone: yes
-#     update: yes
-
-# - name: "Template the config file"
-#   template:
-#     src: "home/.tmux.conf"
-#     dest: "{{ root_dir }}/.tmux.conf"
-#     owner: "{{ owning_user }}"
-#     group: "{{ owning_group }}"
-#     mode: "u=rwx"
+- name: "Template the config file"
+  template:
+    src: "home/.tmux.conf"
+    dest: "{{ root_dir }}/.tmux.conf"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    mode: "u=rwx"
+  tags:
+    - config
+    - template
