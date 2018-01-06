@@ -5,6 +5,8 @@
     state: latest
   with_items: "{{ dependencies }}"
   become: yes
+  tags:
+    - dependency
 
 - name: "Ensure tmux source directory exists"
   file:
@@ -13,6 +15,8 @@
     owner: root
     group: root
   become: yes
+  tags:
+    - directory
 
 - name: "Ensure tmux src is fresh"
   git:
@@ -21,6 +25,8 @@
     clone: yes
     update: yes
   register: tmux_clone
+  tags:
+    - repo
 
 - name: "Rebuild tmux"
   block:
@@ -35,6 +41,8 @@
         chdir: "{{ tmux_src_path }}"
   when: tmux_clone|changed
   become: yes
+  tags:
+    - compile
 
 # - name: "Reinstall tmux"
 #   command: "make install"
