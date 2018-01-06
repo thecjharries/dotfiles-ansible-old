@@ -26,6 +26,7 @@
     clone: yes
     update: yes
   register: tmux_clone
+  become: yes
   tags:
     - repo
 
