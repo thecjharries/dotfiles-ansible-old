@@ -1,23 +1,70 @@
 # https://github.com/powerline/fonts#quick-installation
 ---
+- name: "Ensure powerline-fonts source directory exists"
+  file:
+    path: "{{ powerline_font_src_path }}"
+    state: directory
+    owner: root
+    group: root
+  become: yes
+  tags:
+    - directory
 
-- name: "Clone the repo"
+- name: "Ensure powerline-fonts src is fresh"
   git:
     repo: https://github.com/powerline/fonts.git
-    dest: "{{ root_dir }}/.tmp"
-    depth: 1
+    dest: "{{ powerline_font_src_path }}"
     clone: yes
     update: yes
+  register: powerline_fonts
+  become: yes
+  tags:
+    - repo
 
-- name: "Install the fonts"
-  shell: "cd {{ root_dir }}/.tmp && ./install.sh"
-
-- name: "Ensure config directory exists"
+- name: "Ensure powerline-fonts output directories exists"
   file:
-    src: "{{ root_dir }}/.config/fontconfig/conf.d"
+    path: "{{ item }}"
+    state: directory
     owner: "{{ owning_user }}"
     group: "{{ owning_group }}"
-    state: directory
+  with_items:
+    - "{{ local_font_cache }}"
+    - "{{ local_fontconfig }}"
+  when: powerline_fonts | changed
+  tags:
+    - directory
 
-- name: "Rebuild font cache"
-  command: "fc-cache -vf"
+- name: "Link fonts"
+  file:
+    path: "{{ local_font_cache }}/{{ item.path | basename }}"
+    src: "{{ powerline_font_src_path }}/{{ item.path }}"
+    state: link
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+  with_filetree: "{{ powerline_font_src_path }}"
+  when: powerline_fonts | changed and item.state == "file" and item.path | regex_search("\.((o|t)tf|pcf\.gz)$")
+  tags:
+    - symlink
+    - install
+
+- name: Link fontconfigs
+  file:
+    path: "{{ config_dir }}/fontconfig/conf.d/{{ item.path | basename }}"
+    src: "{{ powerline_font_src_path }}/{{ item.path }}"
+    state: link
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+  with_filetree: "{{ powerline_font_src_path }}"
+  when: powerline_fonts | changed and item.state == "file" and item.path | regex_search("\.conf$")
+  tags:
+    - symlink
+    - install
+
+- name: "Refresh font cache"
+  command: "fc-cache -vf {{ local_font_cache }}"
+  when: powerline_fonts | changed
+  tags:
+    - command
+    - refresh
+
+# TODO: remove stale links
