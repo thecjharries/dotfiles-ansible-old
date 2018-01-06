@@ -47,18 +47,18 @@
     - symlink
     - install
 
-# - name: Link fontconfigs
-#   file:
-#     path: "{{ config_dir }}/fontconfig/conf.d/{{ item.path | basename }}"
-#     src: "{{ powerline_font_src_path }}/{{ item.path }}"
-#     state: link
-#     owner: "{{ owning_user }}"
-#     group: "{{ owning_group }}"
-#   with_filetree: "{{ powerline_font_src_path }}"
-#   when: powerline_fonts | changed and item.state == "file" and item.path | regex_search("\.conf$")
-#   tags:
-#     - symlink
-#     - install
+- name: Link fontconfigs
+  file:
+    path: "{{ config_dir }}/fontconfig/conf.d/{{ item.path | basename }}"
+    src: "{{ powerline_font_src_path }}/{{ item.path }}"
+    state: link
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+  with_filetree: "{{ powerline_font_src_path }}"
+  when: powerline_fonts | changed and item.state == "file" and item.path | regex_search("\.conf$")
+  tags:
+    - symlink
+    - install
 
 # - name: "Refresh font cache"
 #   command: "fc-cache -vf {{ local_font_cache }}"
