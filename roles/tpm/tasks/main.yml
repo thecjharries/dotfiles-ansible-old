@@ -1,4 +1,10 @@
 ---
+- name: "Install tmux dependencies"
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ dependencies }}"
+  become: yes
 
 - name: "Update tmux"
   package:
