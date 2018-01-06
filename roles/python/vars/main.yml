@@ -1,0 +1,8 @@
+---
+dependencies:
+  - python2
+  - python2-devel
+  - python2-pip
+  - python3
+  - python3-devel
+  - python3-pip
