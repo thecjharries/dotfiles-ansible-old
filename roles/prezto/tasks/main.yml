@@ -26,5 +26,19 @@
     clone: yes
     update: yes
   register: prezto_clone
+  become: yes
   tags:
     - repo
+
+- name: "Ensure prezto src is linked"
+  file:
+    path: "{{ config_dir }}/prezto"
+    src: " {{ prezto_src_path }}"
+    state: link
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+  tags:
+    - symlink
+    - install
+
+
