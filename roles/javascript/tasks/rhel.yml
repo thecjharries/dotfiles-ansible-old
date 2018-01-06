@@ -1,39 +1,51 @@
 ---
-- name: "Install dev prereqs"
+- name: "Install prereq dependencies"
   package:
     name: "{{ item }}"
     state: latest
+  with_items: "{{ dependencies }}"
   become: yes
-  with_items:
-    - "gcc-c++"
-    - "make"
+  tags:
+    - dependency
+    - install
 
 - name: "Refresh the Yarn repo"
   get_url:
     url: https://dl.yarnpkg.com/rpm/yarn.repo
     dest: /etc/yum.repos.d/yarn.repo
   become: yes
+  tags:
+    - package
+    - repository
 
 - name: "Ensure installers directory is present"
   file:
-    path: "{{ root_dir }}/.config/installers"
+    path: "{{ nodesource_src_path | dirname }}"
     state: directory
-    owner: "{{ owning_user }}"
-    group: "{{ owning_group }}"
+    owner: root
+    group: root
+  become: yes
+  tags:
+    - directory
 
 - name: "Get latest Node installer"
   get_url:
     url: https://rpm.nodesource.com/setup_9.x
-    dest: "{{ root_dir }}/.config/installers/nodesource"
+    dest: "{{ nodesource_src_path }}"
     mode: "u=rwx,go="
-    owner: "{{ owning_user }}"
-    group: "{{ owning_group }}"
+    owner: root
+    group: root
+  become: yes
   register: nodesource_installer
+  tags:
+    - install
 
 - name: "Run latest NodeSource installer"
-  command: "bash {{ root_dir }}/.config/installers/nodesource"
+  command: "bash {{ nodesource_src_path }}"
   become: yes
   when: nodesource_installer|changed
+  tags:
+    - compile
 
 - name: Update main binaries
   package:
@@ -43,4 +55,16 @@
   with_items:
     - nodejs
     - yarn
+  tags:
+    - install
 
+- name: "Template the NPM config file"
+  blockinfile:
+    dest: "{{ root_dir }}/.npmrc"
+    block: "{{ npmrc_block }}"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    mode: "u=rwx"
+  tags:
+    - config
+    - template
