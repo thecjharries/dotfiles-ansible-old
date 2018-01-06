@@ -58,3 +58,13 @@
   tags:
     - install
 
+- name: "Template the NPM config file"
+  blockinfile:
+    dest: "{{ root_dir }}/.npmrc"
+    block: "{{ npmrc_block }}"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    mode: "u=rwx"
+  tags:
+    - config
+    - template
