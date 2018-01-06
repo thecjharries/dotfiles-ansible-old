@@ -10,16 +10,16 @@
   tags:
     - directory
 
-# - name: "Ensure powerline-fonts src is fresh"
-#   git:
-#     repo: https://github.com/powerline/fonts.git
-#     dest: "{{ powerline_font_src_path }}"
-#     clone: yes
-#     update: yes
-#   register: powerline_fonts
-#   become: yes
-#   tags:
-#     - repo
+- name: "Ensure powerline-fonts src is fresh"
+  git:
+    repo: https://github.com/powerline/fonts.git
+    dest: "{{ powerline_font_src_path }}"
+    clone: yes
+    update: yes
+  register: powerline_fonts
+  become: yes
+  tags:
+    - repo
 
 # - name: "Ensure powerline-fonts output directories exists"
 #   file:
