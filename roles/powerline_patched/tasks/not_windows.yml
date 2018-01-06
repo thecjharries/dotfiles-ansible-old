@@ -34,18 +34,18 @@
   tags:
     - directory
 
-# - name: "Link fonts"
-#   file:
-#     path: "{{ local_font_cache }}/{{ item.path | basename }}"
-#     src: "{{ powerline_font_src_path }}/{{ item.path }}"
-#     state: link
-#     owner: "{{ owning_user }}"
-#     group: "{{ owning_group }}"
-#   with_filetree: "{{ powerline_font_src_path }}"
-#   when: powerline_fonts | changed and item.state == "file" and item.path | regex_search("\.((o|t)tf|pcf\.gz)$")
-#   tags:
-#     - symlink
-#     - install
+- name: "Link fonts"
+  file:
+    path: "{{ local_font_cache }}/{{ item.path | basename }}"
+    src: "{{ powerline_font_src_path }}/{{ item.path }}"
+    state: link
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+  with_filetree: "{{ powerline_font_src_path }}"
+  when: powerline_fonts | changed and item.state == "file" and item.path | regex_search("\.((o|t)tf|pcf\.gz)$")
+  tags:
+    - symlink
+    - install
 
 # - name: Link fontconfigs
 #   file:
