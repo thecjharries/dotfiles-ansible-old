@@ -1,4 +1,13 @@
 ---
+- name: "Install nano dependencies"
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ dependencies }}"
+  become: yes
+  tags:
+    - dependency
+    - install
 
 - name: "Update local files"
   git:
