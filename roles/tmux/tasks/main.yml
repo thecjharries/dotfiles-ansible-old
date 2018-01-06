@@ -7,6 +7,7 @@
   become: yes
   tags:
     - dependency
+    - install
 
 - name: "Ensure tmux source directory exists"
   file:
@@ -44,17 +45,24 @@
   tags:
     - compile
 
-# - name: "Reinstall tmux"
-#   command: "make install"
-#     args:
-#       chdir: "{{ tmux_src_path }}"
-#   when: tmux_clone|changed
-#   become: yes
+- name: "Reinstall tmux"
+  command: "make install"
+  args:
+    chdir: "{{ tmux_src_path }}"
+  when: tmux_clone|changed
+  become: yes
+  tags:
+    - install
 
-# - name: "Update tmux"
-#   package:
-#     name: "tmux"
-#     state: "latest"
+- name: "Ensure tpm is up-to-date"
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{ config_dir }}/tmux/plugins/tpm"
+    clone: yes
+    update: yes
+  tags:
+    - repo
+
 
 # - name: "Update local code"
 #   git:
