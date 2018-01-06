@@ -8,3 +8,14 @@
   tags:
     - dependency
     - install
+
+- name: "Template the config file"
+  template:
+    src: "home/gitconfig"
+    dest: "{{ root_dir }}/.gitconfig"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    mode: "u=rwx"
+  tags:
+    - config
+    - template
