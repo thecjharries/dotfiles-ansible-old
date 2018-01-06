@@ -9,17 +9,26 @@
     - dependency
     - install
 
-- name: "Update local files"
+- name: "Ensure nanorc is up-to-date"
   git:
     repo: https://github.com/scopatz/nanorc.git
-    dest: "{{ root_dir }}/.nano"
+    dest: "{{ config_dir }}/nano"
     clone: yes
     update: yes
+  tags:
+    - repo
 
-- name: "Link the RC file"
-  file:
-    src: "{{ root_dir }}/.nano/nanorc"
-    dest: "{{ root_dir }}/.nanorc"
-    owner: "{{ owning_user }}"
-    group: "{{ owning_group }}"
-    state: link
+# - name: "Update local files"
+#   git:
+#     repo: https://github.com/scopatz/nanorc.git
+#     dest: "{{ root_dir }}/.nano"
+#     clone: yes
+#     update: yes
+
+# - name: "Link the RC file"
+#   file:
+#     src: "{{ root_dir }}/.nano/nanorc"
+#     dest: "{{ root_dir }}/.nanorc"
+#     owner: "{{ owning_user }}"
+#     group: "{{ owning_group }}"
+#     state: link
