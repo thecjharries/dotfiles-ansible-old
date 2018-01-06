@@ -8,7 +8,7 @@
 
 - name: "Ensure tmux source directory exists"
   file:
-    src: "{{ tmux_src_path }}"
+    path: "{{ tmux_src_path }}"
     state: directory
     owner: root
     group: root
@@ -25,14 +25,14 @@
 - name: "Rebuild tmux"
   block:
     - command: "sh autogen.sh"
-        args:
-          chdir: "{{ tmux_src_path }}"
+      args:
+        chdir: "{{ tmux_src_path }}"
     - command: "./configure"
-        args:
-          chdir: "{{ tmux_src_path }}"
+      args:
+        chdir: "{{ tmux_src_path }}"
     - command: "make"
-        args:
-          chdir: "{{ tmux_src_path }}"
+      args:
+        chdir: "{{ tmux_src_path }}"
   when: tmux_clone|changed
   become: yes
 
