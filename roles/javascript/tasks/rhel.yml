@@ -1,13 +1,12 @@
 ---
-
 - name: "Install dev prereqs"
   package:
     name: "{{ item }}"
     state: latest
-    become: yes
+  become: yes
   with_items:
-    - gcc-c++
-    - make
+    - "gcc-c++"
+    - "make"
 
 - name: "Refresh the Yarn repo"
   get_url:
@@ -15,14 +14,26 @@
     dest: /etc/yum.repos.d/yarn.repo
   become: yes
 
+- name: "Ensure installers directory is present"
+  file:
+    path: "{{ root_dir }}/.config/installers"
+    state: directory
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+
 - name: "Get latest Node installer"
   get_url:
     url: https://rpm.nodesource.com/setup_9.x
-    tmp_dest: /tmp/nodesource
+    dest: "{{ root_dir }}/.config/installers/nodesource"
+    mode: "u=rwx,go="
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+  register: nodesource_installer
 
 - name: "Run latest NodeSource installer"
-  command: "bash /tmp/nodesource"
+  command: "bash {{ root_dir }}/.config/installers/nodesource"
   become: yes
+  when: nodesource_installer|changed
 
 - name: Update main binaries
   package:
