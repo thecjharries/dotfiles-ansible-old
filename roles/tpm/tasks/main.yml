@@ -6,6 +6,14 @@
   with_items: "{{ dependencies }}"
   become: yes
 
+- name: "Ensure tmux source directory exists"
+  file:
+    src: "{{ tmux_install_path }}"
+    state: directory
+    owner: root
+    group: root
+  become: yes
+
 - name: "Update tmux"
   package:
     name: "tmux"
