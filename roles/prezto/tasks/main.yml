@@ -1,0 +1,11 @@
+---
+- name: "Install prezto dependencies"
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ dependencies }}"
+  become: yes
+  tags:
+    - dependency
+    - install
+
