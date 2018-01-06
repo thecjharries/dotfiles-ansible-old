@@ -9,3 +9,22 @@
     - dependency
     - install
 
+- name: "Ensure prezto source directory exists"
+  file:
+    path: "{{ prezto_src_path }}"
+    state: directory
+    owner: root
+    group: root
+  become: yes
+  tags:
+    - directory
+
+- name: "Ensure prezto src is fresh"
+  git:
+    repo: https://github.com/sorin-ionescu/prezto
+    dest: "{{ prezto_src_path }}"
+    clone: yes
+    update: yes
+  register: prezto_clone
+  tags:
+    - repo
