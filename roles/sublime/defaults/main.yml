@@ -1,0 +1,5 @@
+---
+owning_user: "{{ ansible_user }}"
+owning_group: "{{ ansible_user }}"
+root_dir: "/home/{{ ansible_user }}"
+config_dir: "{{ root_dir }}/.config"
