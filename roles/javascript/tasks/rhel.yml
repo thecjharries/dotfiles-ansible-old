@@ -47,12 +47,14 @@
   tags:
     - compile
 
-# - name: Update main binaries
-#   package:
-#     name: "{{ item }}"
-#     state: latest
-#   become: yes
-#   with_items:
-#     - nodejs
-#     - yarn
+- name: Update main binaries
+  package:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - nodejs
+    - yarn
+  tags:
+    - install
 
