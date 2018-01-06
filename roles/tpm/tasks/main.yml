@@ -8,10 +8,32 @@
 
 - name: "Ensure tmux source directory exists"
   file:
-    src: "{{ tmux_install_path }}"
+    src: "{{ tmux_src_path }}"
     state: directory
     owner: root
     group: root
+  become: yes
+
+- name: "Ensure tmux src is fresh"
+  git:
+    repo: https://github.com/tmux/tmux
+    dest: "{{ tmux_src_path }}"
+    clone: yes
+    update: yes
+  register: tmux_clone
+
+- name: "Rebuild tmux"
+  block:
+    - command: "sh autogen.sh"
+        args:
+          chdir: "{{ tmux_src_path }}"
+    - command: "./configure"
+        args:
+          chdir: "{{ tmux_src_path }}"
+    - command: "make"
+        args:
+          chdir: "{{ tmux_src_path }}"
+  when: tmux_clone|changed
   become: yes
 
 - name: "Update tmux"
