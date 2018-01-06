@@ -9,6 +9,16 @@
     - dependency
     - install
 
+- name: "Refresh the Yarn repo"
+  get_url:
+    url: https://dl.yarnpkg.com/rpm/yarn.repo
+    dest: /etc/yum.repos.d/yarn.repo
+  become: yes
+  tags:
+    - package
+    - repository
+
+
 # ---
 # - name: "Install dev prereqs"
 #   package:
