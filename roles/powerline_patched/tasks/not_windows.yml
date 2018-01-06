@@ -1,23 +1,21 @@
 # https://github.com/powerline/fonts#quick-installation
 ---
+- name: "Ensure powerline-fonts source directory exists"
+  file:
+    path: "{{ powerline_font_src_path }}"
+    state: directory
+    owner: root
+    group: root
+  become: yes
+  tags:
+    - directory
 
-- name: "Clone the repo"
+- name: "Ensure powerline-fonts src is fresh"
   git:
     repo: https://github.com/powerline/fonts.git
-    dest: "{{ root_dir }}/.tmp"
-    depth: 1
+    dest: "{{ powerline_font_src_path }}"
     clone: yes
     update: yes
-
-- name: "Install the fonts"
-  shell: "cd {{ root_dir }}/.tmp && ./install.sh"
-
-- name: "Ensure config directory exists"
-  file:
-    src: "{{ root_dir }}/.config/fontconfig/conf.d"
-    owner: "{{ owning_user }}"
-    group: "{{ owning_group }}"
-    state: directory
-
-- name: "Rebuild font cache"
-  command: "fc-cache -vf"
+  register: powerline_fonts
+  tags:
+    - repo
