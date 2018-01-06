@@ -28,14 +28,17 @@
   tags:
     - directory
 
-# - name: "Get latest Node installer"
-#   get_url:
-#     url: https://rpm.nodesource.com/setup_9.x
-#     dest: "{{ root_dir }}/.config/installers/nodesource"
-#     mode: "u=rwx,go="
-#     owner: "{{ owning_user }}"
-#     group: "{{ owning_group }}"
-#   register: nodesource_installer
+- name: "Get latest Node installer"
+  get_url:
+    url: https://rpm.nodesource.com/setup_9.x
+    dest: "{{ nodesource_src_path }}"
+    mode: "u=rwx,go="
+    owner: root
+    group: root
+  become: yes
+  register: nodesource_installer
+  tags:
+    - install
 
 # - name: "Run latest NodeSource installer"
 #   command: "bash {{ root_dir }}/.config/installers/nodesource"
