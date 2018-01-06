@@ -59,5 +59,6 @@
   user:
     name: "{{ owning_user }}"
     shell: /bin/zsh
+  become: yes
   tags:
     - config

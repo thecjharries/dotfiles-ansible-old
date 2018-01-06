@@ -65,6 +65,7 @@
     owner: "{{ owning_user }}"
     group: "{{ owning_group }}"
     mode: "u=rwx"
+    create: yes
   tags:
     - config
     - template
