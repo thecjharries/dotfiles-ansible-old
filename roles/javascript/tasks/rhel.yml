@@ -40,10 +40,12 @@
   tags:
     - install
 
-# - name: "Run latest NodeSource installer"
-#   command: "bash {{ root_dir }}/.config/installers/nodesource"
-#   become: yes
-#   when: nodesource_installer|changed
+- name: "Run latest NodeSource installer"
+  command: "bash {{ nodesource_src_path }}"
+  become: yes
+  when: nodesource_installer|changed
+  tags:
+    - compile
 
 # - name: Update main binaries
 #   package:
