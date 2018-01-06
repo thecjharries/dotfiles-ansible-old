@@ -27,3 +27,11 @@
   when: rust_installer|changed
   tags:
     - compile
+
+- name: "Install Rust packages"
+  command: "cargo install {{ item }}"
+  with_items: "{{ rust_packages }}"
+  tags:
+    - dependency
+    - install
+    - rust
