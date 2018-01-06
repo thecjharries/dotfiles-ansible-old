@@ -9,10 +9,19 @@
     - dependency
     - install
 
+- name: "Ensure backups directory exists"
+  file:
+    path: "{{ config_dir }}/nano/backups"
+    state: directory
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+  tags:
+    - directory
+
 - name: "Ensure nanorc is up-to-date"
   git:
     repo: https://github.com/scopatz/nanorc.git
-    dest: "{{ config_dir }}/nano"
+    dest: "{{ config_dir }}/nano/rcfiles"
     clone: yes
     update: yes
   tags:
