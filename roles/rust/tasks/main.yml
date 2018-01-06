@@ -29,8 +29,10 @@
     - compile
 
 - name: "Install Rust packages"
-  command: "cargo install {{ item }}"
+  command: "/usr/local/bin/cargo install --force {{ item }}"
+  become: no
   with_items: "{{ rust_packages }}"
+  when: rust_installer|changed
   tags:
     - dependency
     - install
