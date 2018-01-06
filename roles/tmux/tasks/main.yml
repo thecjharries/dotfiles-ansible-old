@@ -1,0 +1,75 @@
+---
+- name: "Install tmux dependencies"
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ dependencies }}"
+  become: yes
+  tags:
+    - dependency
+    - install
+
+- name: "Ensure tmux source directory exists"
+  file:
+    path: "{{ tmux_src_path }}"
+    state: directory
+    owner: root
+    group: root
+  become: yes
+  tags:
+    - directory
+
+- name: "Ensure tmux src is fresh"
+  git:
+    repo: https://github.com/tmux/tmux
+    dest: "{{ tmux_src_path }}"
+    clone: yes
+    update: yes
+  register: tmux_clone
+  tags:
+    - repo
+
+- name: "Rebuild tmux"
+  block:
+    - command: "sh autogen.sh"
+      args:
+        chdir: "{{ tmux_src_path }}"
+    - command: "./configure"
+      args:
+        chdir: "{{ tmux_src_path }}"
+    - command: "make"
+      args:
+        chdir: "{{ tmux_src_path }}"
+  when: tmux_clone|changed
+  become: yes
+  tags:
+    - compile
+
+- name: "Reinstall tmux"
+  command: "make install"
+  args:
+    chdir: "{{ tmux_src_path }}"
+  when: tmux_clone|changed
+  become: yes
+  tags:
+    - install
+
+- name: "Ensure tpm is up-to-date"
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{ config_dir }}/tmux/plugins/tpm"
+    clone: yes
+    update: yes
+  tags:
+    - repo
+
+- name: "Template the config file"
+  template:
+    src: "home/.tmux.conf"
+    dest: "{{ root_dir }}/.tmux.conf"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    mode: "u=rwx"
+  tags:
+    - config
+    - template
