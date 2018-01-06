@@ -21,18 +21,18 @@
   tags:
     - repo
 
-# - name: "Ensure powerline-fonts output directories exists"
-#   file:
-#     path: "{{ item }}"
-#     state: directory
-#     owner: "{{ owning_user }}"
-#     group: "{{ owning_group }}"
-#   with_items:
-#     - "{{ local_font_cache }}"
-#     - "{{ local_fontconfig }}"
-#   when: powerline_fonts | changed
-#   tags:
-#     - directory
+- name: "Ensure powerline-fonts output directories exists"
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+  with_items:
+    - "{{ local_font_cache }}"
+    - "{{ local_fontconfig }}"
+  when: powerline_fonts | changed
+  tags:
+    - directory
 
 # - name: "Link fonts"
 #   file:
