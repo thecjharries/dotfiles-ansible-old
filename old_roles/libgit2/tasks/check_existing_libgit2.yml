@@ -1,7 +1,0 @@
----
-- name: "Check libgit2 version"
-  shell: "find {{ build_location }}/lib -name {{ file_to_discover }}"
-  ignore_errors: yes
-  register: has_libgit2
-  failed_when: no
-  changed_when: "'libgit2' not in has_libgit2.stdout"
