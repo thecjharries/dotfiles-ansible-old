@@ -8,14 +8,15 @@
   tags:
     - directory
 
-- name: "Ensure nanorc is up-to-date"
-  git:
-    repo: https://github.com/scopatz/nanorc.git
-    dest: "{{ config_dir }}/nano/rcfiles"
-    clone: yes
-    update: yes
-  tags:
-    - repo
+- name: "Check nanorc"
+  include_role:
+    name: repo_installer
+  vars:
+    remote_url: https://github.com/scopatz/nanorc.git
+    src_path: "{{ config_dir }}/nano/rcfiles"
+    repo_owner: "{{ owning_user }}"
+    repo_group: "{{ owning_group }}"
+    repo_become: no
 
 - name: "Template the config file"
   template:
