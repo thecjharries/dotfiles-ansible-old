@@ -1,0 +1,28 @@
+---
+- name: "Rebuild tmux"
+  block:
+    - name: "Autogen"
+      command: "sh autogen.sh"
+      args:
+        chdir: "{{ tmux_src_path }}"
+    - name: "Configure"
+      command: "./configure"
+      args:
+        chdir: "{{ tmux_src_path }}"
+    - name: "Make"
+      command: "make"
+      args:
+        chdir: "{{ tmux_src_path }}"
+  listen: "rebuild tmux"
+  become: yes
+  tags:
+    - compile
+
+- name: "Reinstall tmux"
+  command: "make install"
+  args:
+    chdir: "{{ tmux_src_path }}"
+  listen: "rebuild tmux"
+  become: yes
+  tags:
+    - install
