@@ -4,4 +4,4 @@ repos:
   sha: v3.4.20
   hooks:
     - id: ansible-lint
-      files: \.(yaml|yml)$
+      files: ^\w.*\.(yaml|yml)$
