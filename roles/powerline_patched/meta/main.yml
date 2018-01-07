@@ -1,4 +1,0 @@
----
-dependencies:
-  - role: common_software
-  - role: git

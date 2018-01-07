@@ -1,6 +1,0 @@
----
-dependencies:
-  - role: common_software
-  - role: git
-  - role: package_installer
-    packages_to_install: "{{ needed_packages }}"

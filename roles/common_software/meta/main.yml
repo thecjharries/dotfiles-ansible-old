@@ -1,5 +1,0 @@
----
-allow_duplicates: no
-dependencies:
-  - role: package_installer
-    packages_to_install: "{{ needed_packages }}"
