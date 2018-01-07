@@ -2,7 +2,7 @@
 - name: "Install python packages"
   pip:
     name: "{{ python_packages }}"
-    state: latest
+    state: "{{ desired_state }}"
     extra_args: "--user"
     executable: "pip3"
   tags:
