@@ -5,31 +5,7 @@
   vars:
     remote_url: https://github.com/tmux/tmux
     src_path: "{{ tmux_src_path }}"
-
-- name: "Rebuild tmux"
-  block:
-    - command: "sh autogen.sh"
-      args:
-        chdir: "{{ tmux_src_path }}"
-    - command: "./configure"
-      args:
-        chdir: "{{ tmux_src_path }}"
-    - command: "make"
-      args:
-        chdir: "{{ tmux_src_path }}"
-  when: repo_update|changed
-  become: yes
-  tags:
-    - compile
-
-- name: "Reinstall tmux"
-  command: "make install"
-  args:
-    chdir: "{{ tmux_src_path }}"
-  when: repo_update|changed
-  become: yes
-  tags:
-    - install
+  notify: "rebuild tmux"
 
 - name: "Check tpm"
   include_role:
@@ -41,7 +17,8 @@
     repo_group: "{{ owning_group }}"
     repo_become: no
 
-- include_role:
+- name: "Template tmux config"
+  include_role:
     name: generic_template
   vars:
     template_root: "{{ root_dir }}"

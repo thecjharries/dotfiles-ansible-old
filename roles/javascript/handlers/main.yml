@@ -1,0 +1,7 @@
+---
+- name: "Run latest NodeSource installer"
+  command: "bash {{ nodesource_src_path }}"
+  become: yes
+  listen: "update nodesource"
+  tags:
+    - compile

@@ -18,22 +18,6 @@
     group: root
   become: yes
   register: rust_installer
+  notify: "rustup"
   tags:
     - install
-
-- name: "Run latest Rust installer"
-  command: "bash {{ rustup_src_path }}"
-  become: yes
-  when: rust_installer|changed
-  tags:
-    - compile
-
-- name: "Install Rust packages"
-  command: "/usr/local/bin/cargo install --force {{ item }}"
-  become: no
-  with_items: "{{ rust_packages }}"
-  when: rust_installer|changed
-  tags:
-    - dependency
-    - install
-    - rust

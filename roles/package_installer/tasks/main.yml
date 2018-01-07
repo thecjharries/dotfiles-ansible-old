@@ -2,7 +2,7 @@
 - name: "Install packages"
   package:
     name: "{{ item }}"
-    state: latest
+    state: "{{ desired_state }}"
   with_items: "{{ packages_to_install }}"
   become: yes
   tags:

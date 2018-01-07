@@ -18,7 +18,8 @@
     repo_group: "{{ owning_group }}"
     repo_become: no
 
-- include_role:
+- name: "Template nano config"
+  include_role:
     name: generic_template
   vars:
     template_root: "{{ root_dir }}"
