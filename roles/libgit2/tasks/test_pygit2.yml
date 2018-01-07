@@ -1,3 +1,0 @@
----
-- name: "Test pygit2"
-  command: python -c 'import pygit2'

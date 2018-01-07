@@ -1,17 +1,20 @@
 ---
-possibly_generic:
-  - git
-  - pip
-  - docker
-  - openssh
-  - telnet
+dependencies:
+  - gcc
+  - gcc-c++
+  - automake
+  - autoconf
   - cmake
-
-windows:
-  - nircmd
-  - poshgit
-  - googlechrome
-
-# sublime
-# https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
-# https://www.dropbox.com/download?dl=packages/fedora/nautilus-dropbox-2015.10.28-1.fedora.x86_64.rpm
+  - pkg-config
+  - openssh
+  - libssh
+  - libssh2
+  - libssh2-devel
+  - openssl
+  - openssl-devel
+  - libgit2
+  - libgit2-devel
+  # - akmod-wl
+  - akmods
+  - util-linux-user
+  - libselinux-python

@@ -1,0 +1,21 @@
+---
+- name: "Install dependencies"
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ dependencies }}"
+  become: yes
+  tags:
+    - dependency
+    - install
+
+- name: "Install python packages"
+  pip:
+    name: "{{ python_packages }}"
+    state: latest
+    extra_args: "--user"
+    executable: "pip3"
+  tags:
+    - dependency
+    - install
+    - python

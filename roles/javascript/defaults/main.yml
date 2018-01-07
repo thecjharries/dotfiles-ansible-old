@@ -2,3 +2,13 @@
 owning_user: "{{ ansible_user }}"
 owning_group: "{{ ansible_user }}"
 root_dir: "/home/{{ ansible_user }}"
+config_dir: "{{ root_dir }}/.config"
+
+nodesource_src_path: /opt/installers/nodesource
+
+npmrc_block: |
+    init-author-name=CJ Harries
+    init-author-email=cj@wizardsoftheweb.pro
+    init-author-url=https://wizardsoftheweb.pro/
+    init-version=0.0.0
+    init-license=ISC

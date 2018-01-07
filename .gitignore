@@ -1,2 +1,4 @@
 scratch*
 .retries
+.vault_pass
+vault.yml

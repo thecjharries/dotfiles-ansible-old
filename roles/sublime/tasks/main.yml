@@ -1,0 +1,24 @@
+---
+- name: "Add RPM repository"
+  yum_repository:
+    name: "Sublime Text"
+    description: "Sublime Text official repo"
+    baseurl: https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+    gpgkey: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+    owner: root
+    group: root
+  become: yes
+  tags:
+    - package
+    - repository
+
+- name: "Install packages"
+  package:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - sublime-text
+  tags:
+    - install
+

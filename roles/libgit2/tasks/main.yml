@@ -1,3 +1,0 @@
----
-- name: "Main defaults to a virtualenv install"
-  import_tasks: virtualenv_check.yml
