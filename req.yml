@@ -1,0 +1,16 @@
+---
+- src: git+https://github.com/thecjharries/dotfiles-role-common-software.git
+- src: git+https://github.com/thecjharries/dotfiles-role-generic-template.git
+- src: git+https://github.com/thecjharries/dotfiles-role-git.git
+- src: git+https://github.com/thecjharries/dotfiles-role-i3.git
+- src: git+https://github.com/thecjharries/dotfiles-role-javascript.git
+- src: git+https://github.com/thecjharries/dotfiles-role-nano.git
+- src: git+https://github.com/thecjharries/dotfiles-role-package-installer.git
+- src: git+https://github.com/thecjharries/dotfiles-role-powerline-patched.git
+- src: git+https://github.com/thecjharries/dotfiles-role-prezto.git
+- src: git+https://github.com/thecjharries/dotfiles-role-python.git
+- src: git+https://github.com/thecjharries/dotfiles-role-repo-installer.git
+- src: git+https://github.com/thecjharries/dotfiles-role-rust.git
+- src: git+https://github.com/thecjharries/dotfiles-role-sublime.git
+- src: git+https://github.com/thecjharries/dotfiles-role-terminator.git
+- src: git+https://github.com/thecjharries/dotfiles-role-tmux.git
