@@ -18,18 +18,13 @@
     - symlink
     - install
 
-- name: "Template the ZSH config files"
-  template:
-    src: "{{ item }}"
-    dest: "{{ root_dir }}/.{{ item | basename }}"
-    owner: "{{ owning_user }}"
-    group: "{{ owning_group }}"
-    mode: "u=rwx"
+- include_role:
+    name: generic_template
+  vars:
+    template_root: "{{ root_dir }}"
+    template_path: "{{ item }}"
   with_fileglob:
-    - "../templates/home/*"
-  tags:
-    - config
-    - template
+    - "../templates/*"
 
 - name: "Ensure zsh is the default shell"
   user:
