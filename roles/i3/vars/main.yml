@@ -1,8 +1,0 @@
----
-needed_packages:
-  - i3
-  - i3status
-  - dmenu
-  - i3lock
-  - feh
-  - conky

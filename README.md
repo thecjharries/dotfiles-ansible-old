@@ -1,44 +1,63 @@
 # `dotfiles`
 
-This is my attempt to maintain a unified environment. Right now it works on Fedora 27. It might not work anywhere else. I have Ansible roles for
-
-* installing common libraries
-* installing and configuring `git`
-* installing and configuring `nano`
-* getting repos for, installing, and configuring `node` and `yarn`
-* loading patched Powerline fonts
-* setting up Python 2 and 3
-* installing and configuring `exa` by way of `cargo`/`rust`
-* building and configuring `tmux` and `tpm`
-* installing and customizing `zsh` by way of `prezto`
-* getting the repo for and installing `subl`
-* installing and configuring `terminator`
-* installing and configuring `i3`
+This is my attempt to maintain a unified environment. Right now it works on Fedora 27. It might not work anywhere else. At the moment, I have at least basic tests in Fedora with every component, so I'm pretty sure it works there.
 
 ## Security
 
 There's nothing you can't discover via Google stored in this repo (e.g. SSH keys, IP addresses, auth tokens, etc.). All of that's run locally by Ansible vault and some explicitly ignored files.
 
-## Usage
+## Where's all the code?
 
-All of the config is how I like things, so you might not like it. That being siad, you're more than welcome to use this. Something like this will get you started:
+I've split everything out into its own role to make updates and management way easier.
+
+### Meta
+* [`dotfiles-images`](thecjharries/dotfiles-images) holds the Docker images I'm using to test everything.
+* [`dotfiles-host-dev`](thecjharries/dotfiles-host-dev) is the only host I have built right now. It runs my primary dev config.
+
+### Components
+
+#### Internal Use
+* [`dotfiles-role-generic-template`](thecjharries/dotfiles-role-generic-template) handles the majority of the user config templating.
+* [`dotfiles-role-package-installer`](thecjharries/dotfiles-role-package-installer) installs packages with a common set of options.
+* [`dotfiles-role-repo-installer`](thecjharries/dotfiles-role-repo-installer) grabs remote `git` URLs in a coordinated way.
+
+#### Components
+* [`dotfiles-role-common-software`](thecjharries/dotfiles-role-common-software) installs libraries that don't really belong to a single package.
+* [`dotfiles-role-git`](thecjharries/dotfiles-role-git) installs and configures `git`.
+* [`dotfiles-role-i3`](thecjharries/dotfiles-role-i3) installs and configures `i3` and its components.
+* [`dotfiles-role-javascript`](thecjharries/dotfiles-role-javascript) loads, installs, and configures major JS libraries (Node, Yarn).
+* [`dotfiles-role-nano`](thecjharries/dotfiles-role-nano) installs and configures `nano` with some extra stuff.
+* [`dotfiles-role-powerline-patched`](thecjharries/dotfiles-role-powerline-patched) configures patched Powerline fonts.
+* [`dotfiles-role-prezto`](thecjharries/dotfiles-role-prezto) installs and configures `zsh` by way of `prezto`.
+* [`dotfiles-role-python`](thecjharries/dotfiles-role-python) sets up Python 2 and 3 as well as `pip` and some libraries.
+* [`dotfiles-role-rust`](thecjharries/dotfiles-role-rust) installs `exa` (also sorta `cargo`).
+* [`dotfiles-role-sublime`](thecjharries/dotfiles-role-sublime) loads and installs `subl`.
+* [`dotfiles-role-terminator`](thecjharries/dotfiles-role-terminator) installs and configures `terminator`.
+* [`dotfiles-role-tmux`](thecjharries/dotfiles-role-tmux) builds `tmux` from source and installs `tpm`.
+
+## How does that work?
+
+Something like this should launch this:
+
+```sh-session
+$ cd /path/to/repo
+$ $EDITOR site.yml
+```
 
 ```yml
-# Built around v0.2.0
 ---
-- hosts: development
+- hosts: all
 
   roles:
-    - role: common_software
-    - role: git
-    - role: nano
-    - role: javascript
-    - role: powerline_patched
-    - role: python
-    - role: rust
-    - role: tmux
-    - role: prezto
-    - role: sublime
-    - role: terminator
-    - role: i3
+  - role: dotfiles-host-dev
 ```
+
+```sh-session
+$ ansible-galaxy -r req.yml install
+$ ansible-playbook site.yml
+No config file found; using defaults
+ [WARNING]: Unable to parse /etc/ansible/hosts as an inventory source
+...
+```
+
+The [`dotfiles-host-dev` build log](https://travis-ci.org/thecjharries/dotfiles-host-dev) might give you a few more ideas.

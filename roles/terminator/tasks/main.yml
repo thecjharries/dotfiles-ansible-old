@@ -1,7 +1,0 @@
----
-- name: "Template terminator config"
-  include_role:
-    name: generic_template
-  vars:
-    template_root: "{{ config_dir }}"
-    template_path: "terminator/config"
