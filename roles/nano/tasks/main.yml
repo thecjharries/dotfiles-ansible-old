@@ -1,14 +1,4 @@
 ---
-- name: "Install nano dependencies"
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items: "{{ dependencies }}"
-  become: yes
-  tags:
-    - dependency
-    - install
-
 - name: "Ensure backups directory exists"
   file:
     path: "{{ config_dir }}/nano/backups"

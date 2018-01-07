@@ -1,14 +1,4 @@
 ---
-- name: "Install git dependencies"
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items: "{{ dependencies }}"
-  become: yes
-  tags:
-    - dependency
-    - install
-
 - name: "Template the config file"
   template:
     src: "home/gitconfig"

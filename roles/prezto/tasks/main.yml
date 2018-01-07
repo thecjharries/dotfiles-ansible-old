@@ -1,14 +1,4 @@
 ---
-- name: "Install prezto dependencies"
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items: "{{ dependencies }}"
-  become: yes
-  tags:
-    - dependency
-    - install
-
 - name: "Ensure prezto source directory exists"
   file:
     path: "{{ prezto_src_path }}"
