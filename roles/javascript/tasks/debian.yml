@@ -1,40 +1,40 @@
----
+# ---
 
-- name: "Install dev prereqs"
-  package:
-    name: "{{ item }}"
-    state: latest
-  become: yes
-  with_items:
-    - build-essential
+# - name: "Install dev prereqs"
+#   package:
+#     name: "{{ item }}"
+#     state: latest
+#   become: yes
+#   with_items:
+#     - build-essential
 
-- name: "Ensure Yarn GPG key is present"
-  apt_key:
-    url: https://dl.yarnpkg.com/debian/pubkey.gpg
-    state: present
-  become: yes
+# - name: "Ensure Yarn GPG key is present"
+#   apt_key:
+#     url: https://dl.yarnpkg.com/debian/pubkey.gpg
+#     state: present
+#   become: yes
 
-- name: "Ensure Yarn repo is enabled"
-  lineinfile:
-    path: /etc/apt/sources.list.d/yarn.list
-    line: "deb https://dl.yarnpkg.com/debian/ stable main"
-  become: yes
+# - name: "Ensure Yarn repo is enabled"
+#   lineinfile:
+#     path: /etc/apt/sources.list.d/yarn.list
+#     line: "deb https://dl.yarnpkg.com/debian/ stable main"
+#   become: yes
 
-- name: "Get latest NodeSource installer"
-  get_url:
-    url: https://deb.nodesource.com/setup_9.x
-    tmp_dest: /tmp/nodesource
-  become: yes
+# - name: "Get latest NodeSource installer"
+#   get_url:
+#     url: https://deb.nodesource.com/setup_9.x
+#     tmp_dest: /tmp/nodesource
+#   become: yes
 
-- name: "Run latest NodeSource installer"
-  command: "bash /tmp/nodesource"
-  become: yes
+# - name: "Run latest NodeSource installer"
+#   command: "bash /tmp/nodesource"
+#   become: yes
 
-- name: Update main binaries
-  package:
-    name: "{{ item }}"
-    state: latest
-  become: yes
-  with_items:
-    - nodejs
-    - yarn
+# - name: Update main binaries
+#   package:
+#     name: "{{ item }}"
+#     state: latest
+#   become: yes
+#   with_items:
+#     - nodejs
+#     - yarn
