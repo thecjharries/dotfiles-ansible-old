@@ -8,3 +8,25 @@
   tags:
     - dependency
     - install
+
+- name: "Template the main config file"
+  template:
+    src: "home/config/i3/config"
+    dest: "{{ config_dir }}/i3/config"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    mode: "u=rwx"
+  tags:
+    - config
+    - template
+
+- name: "Template the status bar config file"
+  template:
+    src: "home/config/i3status/config"
+    dest: "{{ config_dir }}/i3status/config"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    mode: "u=rwx"
+  tags:
+    - config
+    - template
