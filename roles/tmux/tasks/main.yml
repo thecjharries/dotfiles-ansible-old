@@ -31,14 +31,15 @@
   tags:
     - install
 
-- name: "Ensure tpm is up-to-date"
-  git:
-    repo: https://github.com/tmux-plugins/tpm
-    dest: "{{ config_dir }}/tmux/plugins/tpm"
-    clone: yes
-    update: yes
-  tags:
-    - repo
+- name: "Check tpm"
+  include_role:
+    name: repo_installer
+  vars:
+    remote_url: https://github.com/tmux-plugins/tpm
+    src_path: "{{ config_dir }}/tmux/plugins/tpm"
+    repo_owner: "{{ owning_user }}"
+    repo_group: "{{ owning_group }}"
+    repo_become: no
 
 - name: "Template the config file"
   template:
