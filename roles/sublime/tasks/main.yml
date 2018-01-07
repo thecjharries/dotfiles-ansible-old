@@ -12,13 +12,9 @@
     - package
     - repository
 
-- name: "Install packages"
-  package:
-    name: "{{ item }}"
-    state: latest
-  become: yes
-  with_items:
+- name: Update Sublime binaries
+  include_role:
+    name: package_installer
+  vars:
+    packages_to_install:
     - sublime-text
-  tags:
-    - install
-

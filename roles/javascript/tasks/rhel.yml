@@ -38,15 +38,12 @@
     - compile
 
 - name: Update main binaries
-  package:
-    name: "{{ item }}"
-    state: latest
-  become: yes
-  with_items:
-    - nodejs
-    - yarn
-  tags:
-    - install
+  include_role:
+    name: package_installer
+  vars:
+    packages_to_install:
+      - nodejs
+      - yarn
 
 - name: "Template the NPM config file"
   blockinfile:
