@@ -1,0 +1,21 @@
+---
+- name: "Install terminator dependencies"
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ dependencies }}"
+  become: yes
+  tags:
+    - dependency
+    - install
+
+- name: "Template the config file"
+  template:
+    src: "home/config/terminator/config"
+    dest: "{{ config_dir }}/terminator/config"
+    owner: "{{ owning_user }}"
+    group: "{{ owning_group }}"
+    mode: "u=rwx"
+  tags:
+    - config
+    - template
