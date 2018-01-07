@@ -1,5 +1,6 @@
 ---
-- include_role:
+- name: "Template git config"
+  include_role:
     name: generic_template
   vars:
     template_root: "{{ root_dir }}"

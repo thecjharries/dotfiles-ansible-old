@@ -1,12 +1,12 @@
----
+# ---
 
-- name: "Clone the repo"
-  git:
-    repo: https://github.com/powerline/fonts.git
-    dest: "{{ root_dir }}\.tmp"
-    depth: 1
-    clone: yes
-    update: yes
+# - name: "Clone the repo"
+#   git:
+#     repo: https://github.com/powerline/fonts.git
+#     dest: "{{ root_dir }}\.tmp"
+#     depth: 1
+#     clone: yes
+#     update: yes
 
-- name: "Run the installer"
-  win_shell: "cd {{ root_dir }}\.tmp && .\install.ps1"
+# - name: "Run the installer"
+#   win_shell: "cd {{ root_dir }}\.tmp && .\install.ps1"

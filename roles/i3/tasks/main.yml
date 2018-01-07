@@ -1,5 +1,6 @@
 ---
-- include_role:
+- name: "Template i3 config"
+  include_role:
     name: generic_template
   vars:
     template_root: "{{ config_dir }}"
