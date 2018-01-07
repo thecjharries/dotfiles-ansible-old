@@ -27,15 +27,9 @@
     group: root
   become: yes
   register: nodesource_installer
+  notify: "update nodesource"
   tags:
     - install
-
-- name: "Run latest NodeSource installer"
-  command: "bash {{ nodesource_src_path }}"
-  become: yes
-  when: nodesource_installer|changed
-  tags:
-    - compile
 
 - name: Update main binaries
   include_role:
