@@ -1,4 +1,4 @@
 ---
-dependencies:
+needed_packages:
   - git
   - gitflow

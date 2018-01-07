@@ -1,7 +1,4 @@
 ---
 dependencies:
-  - role: common_software
-  - role: terminator
-  - role: sublime
   - role: package_installer
     packages_to_install: "{{ needed_packages }}"

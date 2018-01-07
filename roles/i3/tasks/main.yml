@@ -1,14 +1,4 @@
 ---
-- name: "Install i3 dependencies"
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items: "{{ dependencies }}"
-  become: yes
-  tags:
-    - dependency
-    - install
-
 - name: "Template the main config file"
   template:
     src: "home/config/i3/config"
