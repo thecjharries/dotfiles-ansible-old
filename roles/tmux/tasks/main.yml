@@ -41,13 +41,8 @@
     repo_group: "{{ owning_group }}"
     repo_become: no
 
-- name: "Template the config file"
-  template:
-    src: "home/.tmux.conf"
-    dest: "{{ root_dir }}/.tmux.conf"
-    owner: "{{ owning_user }}"
-    group: "{{ owning_group }}"
-    mode: "u=rwx"
-  tags:
-    - config
-    - template
+- include_role:
+    name: generic_template
+  vars:
+    template_root: "{{ root_dir }}"
+    template_path: ".tmux.conf"
