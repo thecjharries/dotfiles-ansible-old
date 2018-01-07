@@ -1,0 +1,22 @@
+---
+- name: "Ensure the src directory exists"
+  file:
+    path: "{{ src_path }}"
+    state: directory
+    owner: "{{ repo_owner }}"
+    group: "{{ repo_group }}"
+  become: "{{ repo_become }}"
+  tags:
+    - directory
+
+- name: "Ensure src is fresh"
+  git:
+    repo: "{{ remote_url }}"
+    dest: "{{ src_path }}"
+    clone: yes
+    update: yes
+    recursive: "{{ recursive_pull }}"
+  register: repo_update
+  become: "{{ repo_become }}"
+  tags:
+    - repo

@@ -1,25 +1,11 @@
 # https://github.com/powerline/fonts#quick-installation
 ---
-- name: "Ensure powerline-fonts source directory exists"
-  file:
-    path: "{{ powerline_font_src_path }}"
-    state: directory
-    owner: root
-    group: root
-  become: yes
-  tags:
-    - directory
-
-- name: "Ensure powerline-fonts src is fresh"
-  git:
-    repo: https://github.com/powerline/fonts.git
-    dest: "{{ powerline_font_src_path }}"
-    clone: yes
-    update: yes
-  register: powerline_fonts
-  become: yes
-  tags:
-    - repo
+- name: "Check powerline-fonts "
+  include_role:
+    name: repo_installer
+  vars:
+    remote_url: https://github.com/powerline/fonts.git
+    src_path: "{{ powerline_font_src_path }}"
 
 - name: "Ensure powerline-fonts output directories exists"
   file:
@@ -30,7 +16,7 @@
   with_items:
     - "{{ local_font_cache }}"
     - "{{ local_fontconfig }}"
-  when: powerline_fonts | changed
+  when: repo_update | changed
   tags:
     - directory
 
@@ -42,7 +28,7 @@
     owner: "{{ owning_user }}"
     group: "{{ owning_group }}"
   with_filetree: "{{ powerline_font_src_path }}"
-  when: powerline_fonts | changed and item.state == "file" and item.path | regex_search("\.((o|t)tf|pcf\.gz)$")
+  when: repo_update | changed and item.state == "file" and item.path | regex_search("\.((o|t)tf|pcf\.gz)$")
   tags:
     - symlink
     - install
@@ -55,14 +41,14 @@
     owner: "{{ owning_user }}"
     group: "{{ owning_group }}"
   with_filetree: "{{ powerline_font_src_path }}"
-  when: powerline_fonts | changed and item.state == "file" and item.path | regex_search("\.conf$")
+  when: repo_update | changed and item.state == "file" and item.path | regex_search("\.conf$")
   tags:
     - symlink
     - install
 
 - name: "Refresh font cache"
   command: "fc-cache -vf {{ local_font_cache }}"
-  when: powerline_fonts | changed
+  when: repo_update | changed
   tags:
     - command
     - refresh

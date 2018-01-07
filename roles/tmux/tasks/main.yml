@@ -1,24 +1,10 @@
 ---
-- name: "Ensure tmux source directory exists"
-  file:
-    path: "{{ tmux_src_path }}"
-    state: directory
-    owner: root
-    group: root
-  become: yes
-  tags:
-    - directory
-
-- name: "Ensure tmux src is fresh"
-  git:
-    repo: https://github.com/tmux/tmux
-    dest: "{{ tmux_src_path }}"
-    clone: yes
-    update: yes
-  register: tmux_clone
-  become: yes
-  tags:
-    - repo
+- name: "Check tmux"
+  include_role:
+    name: repo_installer
+  vars:
+    remote_url: https://github.com/tmux/tmux
+    src_path: "{{ tmux_src_path }}"
 
 - name: "Rebuild tmux"
   block:
@@ -31,7 +17,7 @@
     - command: "make"
       args:
         chdir: "{{ tmux_src_path }}"
-  when: tmux_clone|changed
+  when: repo_update|changed
   become: yes
   tags:
     - compile
@@ -40,19 +26,20 @@
   command: "make install"
   args:
     chdir: "{{ tmux_src_path }}"
-  when: tmux_clone|changed
+  when: repo_update|changed
   become: yes
   tags:
     - install
 
-- name: "Ensure tpm is up-to-date"
-  git:
-    repo: https://github.com/tmux-plugins/tpm
-    dest: "{{ config_dir }}/tmux/plugins/tpm"
-    clone: yes
-    update: yes
-  tags:
-    - repo
+- name: "Check tpm"
+  include_role:
+    name: repo_installer
+  vars:
+    remote_url: https://github.com/tmux-plugins/tpm
+    src_path: "{{ config_dir }}/tmux/plugins/tpm"
+    repo_owner: "{{ owning_user }}"
+    repo_group: "{{ owning_group }}"
+    repo_become: no
 
 - name: "Template the config file"
   template:
