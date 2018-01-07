@@ -1,9 +1,0 @@
----
-
-- name: "Update JS Packages"
-  win_chocolatey:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - nodejs
-    - yarn

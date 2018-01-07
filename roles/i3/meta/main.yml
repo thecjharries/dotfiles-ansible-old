@@ -1,5 +1,0 @@
----
-dependencies:
-  - role: common_software
-  - role: terminator
-  - role: sublime
