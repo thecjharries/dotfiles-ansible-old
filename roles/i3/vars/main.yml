@@ -1,5 +1,5 @@
 ---
-dependencies:
+needed_packages:
   - i3
   - i3status
   - dmenu

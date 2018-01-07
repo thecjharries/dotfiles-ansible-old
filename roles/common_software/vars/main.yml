@@ -1,5 +1,5 @@
 ---
-dependencies:
+needed_packages:
   - gcc
   - gcc-c++
   - automake
