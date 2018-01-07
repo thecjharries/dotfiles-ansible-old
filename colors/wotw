@@ -34,3 +34,20 @@
 ! white
 *.color7:       #ccccc6
 *.color15:      #f8f8f2
+
+*.color0:       #1b1d1e
+*.color1:       #f92672
+*.color2:       #82b414
+*.color3:       #fd971f
+*.color4:       #268bd2
+*.color5:       #8c54fe
+*.color6:       #008080
+*.color7:       #ccccc6
+*.color8:       #505354
+*.color12:      #ff5995
+*.color10:      #b7eb46
+*.color11:      #94d8e5
+*.color9:       #62ade3
+*.color13:      #bfa0fe
+*.color14:      #feed6c
+*.color15:      #f8f8f2
