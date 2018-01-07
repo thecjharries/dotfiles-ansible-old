@@ -8,13 +8,16 @@
 
 - name: "Rebuild tmux"
   block:
-    - command: "sh autogen.sh"
+    - name: "Autogen"
+      command: "sh autogen.sh"
       args:
         chdir: "{{ tmux_src_path }}"
-    - command: "./configure"
+    - name: "Configure"
+      command: "./configure"
       args:
         chdir: "{{ tmux_src_path }}"
-    - command: "make"
+    - name: "Make"
+      command: "make"
       args:
         chdir: "{{ tmux_src_path }}"
   when: repo_update|changed
