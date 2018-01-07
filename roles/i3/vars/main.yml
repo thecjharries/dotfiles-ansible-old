@@ -1,0 +1,8 @@
+---
+dependencies:
+  - i3
+  - i3status
+  - dmenu
+  - i3lock
+  - feh
+  - conky

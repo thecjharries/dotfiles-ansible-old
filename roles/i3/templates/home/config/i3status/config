@@ -1,0 +1,33 @@
+general {
+        colors = true
+        interval = 5
+}
+
+order += "ipv6"
+order += "disk /"
+order += "wireless wlp4s0"
+order += "cpu_temperature 0"
+order += "load"
+order += "tztime local"
+
+wireless wlp4s0 {
+        format_up = "W: (%quality at %essid, %bitrate) %ip"
+        format_down = "W: down"
+}
+
+tztime local {
+        format = "%Y-%m-%d %H:%M:%S"
+}
+
+load {
+        format = "%5min"
+}
+
+cpu_temperature 0 {
+        format = "T: %degrees °C"
+        path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input"
+}
+
+disk "/" {
+        format = "%free"
+}
