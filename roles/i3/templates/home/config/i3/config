@@ -23,7 +23,8 @@ font pango:Droid Sans Mono for Powerline Regular 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt
+#bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec terminator
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -114,7 +115,9 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 assign [class="^urxvt"] $ws01
 assign [class="^URxvt"] $ws01
-exec urxvt
+assign [class="^terminator"] $ws01
+assign [class="^Terminator"] $ws01
+exec terminator
 
 assign [class="^sublime_text"] $ws02
 assign [class="^Sublime_text"] $ws02
